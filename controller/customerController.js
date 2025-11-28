@@ -1,5 +1,6 @@
 import Customer from '../model/customerModel.js';
 import { sequelize } from '../config/conn.js';
+import { Op } from "sequelize";
 
 export const getCustomer = async (req, res) => {
   try {
@@ -35,18 +36,19 @@ export const createCustomer = async (req, res) => {
       return res.status(400).json({ message: "Name is required." });
     }
 
-    const currentYear = new Date().getFullYear(); 
+    const currentYear = new Date().getFullYear();
 
     const lastCustomer = await Customer.findOne({
-      where: sequelize.where(
-        sequelize.literal(`"code" LIKE 'C${currentYear}%'`),
-        true
-      ),
+      where: {
+        code: {
+          [Op.like]: `C${currentYear}%`
+        }
+      },
       order: [
         [
-          sequelize.literal(`CAST(SUBSTRING("code", 6) AS INTEGER)`),
-          "DESC",
-        ],
+          sequelize.literal(`CAST(SUBSTRING(code, 6) AS UNSIGNED)`),
+          "DESC"
+        ]
       ],
     });
 
@@ -83,6 +85,7 @@ export const createCustomer = async (req, res) => {
     });
   }
 };
+
 
 export const updateCustomer = async (req, res) => {
   try {

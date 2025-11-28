@@ -1,5 +1,6 @@
 import Booking from '../model/bookingModel.js'
 import { sequelize } from '../config/conn.js';
+import { Op } from "sequelize";
 
 export const getBooking = async(req,res)=>{
     try {
@@ -14,32 +15,23 @@ export const getBooking = async(req,res)=>{
 export const createBooking = async (req, res) => {
   try {
     const { customerId, remarks } = req.body;
-
-    if (!customerId) {
-      return res.status(400).json({ message: "Customer ID is required." });
-    }
+    if (!customerId) return res.status(400).json({ message: "Customer ID is required." });
 
     const currentYear = new Date().getFullYear();
 
     const lastBooking = await Booking.findOne({
-      where: sequelize.where(
-        sequelize.literal(`"bookingNumber" LIKE 'AGLC${currentYear}%'`),
-        true
-      ),
+      where: {
+        bookingNumber: { [Op.like]: `AGLC${currentYear}%` }
+      },
       order: [
-        [
-          sequelize.literal(`CAST(SUBSTRING("bookingNumber", 6) AS INTEGER)`),
-          "DESC",
-        ],
+        [sequelize.literal(`CAST(SUBSTRING(bookingNumber, 9) AS UNSIGNED)`), "DESC"]
       ],
     });
 
     let nextNumber = 1;
     if (lastBooking && lastBooking.bookingNumber) {
       const numberPart = parseInt(lastBooking.bookingNumber.slice(8), 10); 
-      if (!isNaN(numberPart)) {
-        nextNumber = numberPart + 1;
-      }
+      if (!isNaN(numberPart)) nextNumber = numberPart + 1;
     }
 
     const bookingNumber = `AGLC${currentYear}${String(nextNumber).padStart(5, "0")}`;
@@ -64,6 +56,7 @@ export const createBooking = async (req, res) => {
     });
   }
 };
+
 
 export const getBookingById = async (req, res) => {
   try {
