@@ -37,16 +37,13 @@ export const getPaymentRequestById = async(req,res)=>{
 export const postPaymentRequest = async (req, res) => {
   try {
     const { vendorId, dateNeeded, costCenterId, chargeTo, remarks, requestType } = req.body;
-
   
     let prefix = "";
     if (requestType === "Check") prefix = "CR";
     else if (requestType === "Manager's Check") prefix = "MCR";
     else if (requestType === "Petty Cash") prefix = "PCR";
 
- 
     const year = new Date().getFullYear();
-
 
     const lastRequest = await PaymentRequest.findOne({
       where: {

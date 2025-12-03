@@ -86,7 +86,6 @@ export const createCustomer = async (req, res) => {
   }
 };
 
-
 export const updateCustomer = async (req, res) => {
   try {
     const { id } = req.params;

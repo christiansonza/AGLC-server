@@ -57,7 +57,6 @@ export const createBooking = async (req, res) => {
   }
 };
 
-
 export const getBookingById = async (req, res) => {
   try {
     const { id } = req.params;
