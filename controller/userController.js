@@ -127,7 +127,7 @@ export const getUserId = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email, firstName, middleName, lastName, role } = req.body;
+    const { username, email, firstName, middleName, lastName, role, updatedById, isActive } = req.body;
 
     const user = await User.findByPk(id);
     if (!user) {
@@ -140,6 +140,9 @@ export const updateUser = async (req, res) => {
     user.middleName = middleName || user.middleName;
     user.lastName = lastName || user.lastName;
     user.role = role || user.role;
+    user.isActive = isActive ?? user.isActive;
+    user.updatedById = req.user?.id ?? updatedById ?? user.updatedById;
+
 
     await user.save();
 
