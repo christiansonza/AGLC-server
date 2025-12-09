@@ -35,7 +35,7 @@ export const createUser = async (req, res) => {
   try {
     const userCount = await User.count();
     if (userCount > 0) {
-      return res.status(403).json({ message: 'Registration is closed. A user already exists.' });
+      return res.status(403).json({ message: 'Registration is closed.' });
     }
     const { username, password, email, firstName, middleName, lastName, role, isActive} = req.body;
 
@@ -61,7 +61,7 @@ export const createUser = async (req, res) => {
       firstName,
       middleName,
       lastName,
-      role,
+      role: 'Power User',
       isActive : true
     });
 
@@ -213,6 +213,39 @@ export const updateUser = async (req, res) => {
       user: userResponse
     });
 
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
+};
+
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password, updatedById } = req.body;
+
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 12);
+      user.password = hashedPassword;
+    }
+
+    user.updatedById = req.user?.id ?? updatedById ?? user.updatedById;
+
+    await user.save();
+
+    const userResponse = user.toJSON();
+    delete userResponse.password;
+
+    res.status(200).json({
+      message: 'User updated successfully.',
+      user: userResponse
+    });
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ message: 'Internal Server Error', error: error.message });

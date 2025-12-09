@@ -7,7 +7,8 @@ import {
   logUser,
   updateUser,
   getCurrentUser,
-  getUserCount
+  getUserCount,
+  updateUserProfile
 } from '../controller/userController.js';
 import AuthMiddleware from '../middleware/authMiddleware.js';
 
@@ -23,6 +24,8 @@ router.post('/register', createUser);
 router.post('/modal', createUserModal);
 router.post('/login', logUser);
 router.put('/:id', AuthMiddleware, updateUser);
+router.put('/profile/:id', AuthMiddleware, updateUserProfile);
+
 
 router.post('/logout', (req, res) => {
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'strict', secure: false });
