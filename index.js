@@ -25,6 +25,9 @@ import banks from './router/banksRouter.js'
 import agents from './router/agentsRouter.js'
 import journalEntry from './router/journalEntryRouter.js'
 import pettyCashLiquidation from './router/pettyCashLiquidationRouter.js'
+import courier from './router/courierRouter.js'
+import broker from './router/brokerRouter.js'
+import vessel from './router/vesselRouter.js'
 
 //models
 import './model/userModel.js'
@@ -45,6 +48,9 @@ import './model/banksModel.js'
 import './model/agentsModel.js'
 import './model/journalEntryModel.js'
 import './model/pettyCashLiquidationModel.js'
+import './model/courierModel.js'
+import './model/brokerModel.js'
+import './model/vesselModel.js'
 
 
 const app = express()
@@ -80,6 +86,9 @@ app.use('/banks',banks)
 app.use('/agents',agents)
 app.use('/journalEntry', journalEntry)
 app.use('/pettyCashLiquidation', pettyCashLiquidation)
+app.use('/courier', courier)
+app.use('/broker', broker)
+app.use('/vessel', vessel)
 
 
 //Connection
