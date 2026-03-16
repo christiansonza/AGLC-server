@@ -28,6 +28,8 @@ import pettyCashLiquidation from './router/pettyCashLiquidationRouter.js'
 import courier from './router/courierRouter.js'
 import broker from './router/brokerRouter.js'
 import vessel from './router/vesselRouter.js'
+import shipper from './router/shipperRouter.js'
+import destination from './router/destinationRouter.js'
 
 //models
 import './model/userModel.js'
@@ -51,6 +53,8 @@ import './model/pettyCashLiquidationModel.js'
 import './model/courierModel.js'
 import './model/brokerModel.js'
 import './model/vesselModel.js'
+import './model/shipperModel.js'
+import './model/destinationModel.js'
 
 
 const app = express()
@@ -89,6 +93,8 @@ app.use('/pettyCashLiquidation', pettyCashLiquidation)
 app.use('/courier', courier)
 app.use('/broker', broker)
 app.use('/vessel', vessel)
+app.use('/shipper', shipper)
+app.use('/destination', destination)
 
 
 //Connection
