@@ -10,8 +10,6 @@ export const getDestination = async(req,res) =>{
     }
 }
 
-
-
 export const getDestinationById = async(req,res) =>{
     try {
         const {id} = req.params
@@ -28,15 +26,13 @@ export const getDestinationById = async(req,res) =>{
     }
 }
 
-
-
 export const createDestination = async(req,res) =>{
     try {
-        const {destination} = req.body
-        if(!destination){
+        const {destinationName} = req.body
+        if(!destinationName){
             return res.status(400).json({message:'Destination is required.'})
         }
-        const result = await Destination.create({destination})
+        const result = await Destination.create({destinationName})
         res.status(201).json({
             message:'Created Successfully.',
             data:result
@@ -48,11 +44,21 @@ export const createDestination = async(req,res) =>{
     }
 }
 
-
-
 export const updateDestination = async(req,res) =>{
     try {
-        
+        const {id} = req.params
+        const {destinationName} = req.body
+
+        const result = await Destination.findByPk(id)
+        if(!result) {
+            return res.status(404).json({message:'Destination not found.'})
+        }
+
+        await result.update({
+            destinationName: destinationName ?? result.destinationName
+        })
+
+        res.status(200).json({message:'Updated successfully.'})
     } catch (error) {
         console.error(error)
         res.status(500).json({message:'Internal Server Error', error:error.message})

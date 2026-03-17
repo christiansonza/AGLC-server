@@ -55,6 +55,7 @@ import './model/brokerModel.js'
 import './model/vesselModel.js'
 import './model/shipperModel.js'
 import './model/destinationModel.js'
+import './model/bookingDetailsModel.js'
 
 
 const app = express()

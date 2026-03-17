@@ -1,19 +1,18 @@
 import { sequelize } from "../config/conn.js";
 import { DataTypes } from "sequelize";
 
-const destination = sequelize.define('Destination',
-    {
-        id:{
-            type:DataTypes.INTEGER,
-            primaryKey:true,
-            autoIncrement:true
-        },
-        shipper:{
-            type:DataTypes.STRING
-        }
+const Destination = sequelize.define('Destination', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    {tableName:'Destination'}
-)
+    destinationName: { 
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}, {
+    tableName: 'Destination',
+});
 
-
-export default destination
+export default Destination;
