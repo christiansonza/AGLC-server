@@ -17,6 +17,10 @@ import PettyCashLiquidation from './pettyCashLiquidationModel.js'
 import PettyCashLiquidationDetail from './pettyCashLiquidationDetail.js'
 
 import BookingDetails from '../model/bookingDetailsModel.js'; 
+
+import JournalEntryBooking from './journalEntryBookingModel.js'
+
+
 //account, subaccount
 SubAccountTitle.belongsTo(AccountTitle, { foreignKey: 'accountId', as: 'account' });
 AccountTitle.hasMany(SubAccountTitle, { foreignKey: 'accountId', as: 'subAccounts' });
@@ -46,7 +50,7 @@ Employee.hasMany(PettyCashRelease, {foreignKey:'receivedById', as:'pettyCash'})
 
 
 // journal
-JournalEntry.belongsTo(PettyCashRelease, {foreignKey:'belongsToId', as:'pettyCash'}),
+JournalEntry.belongsTo(PettyCashRelease, {foreignKey:'belongsToId', as:'pettyCash'})
 PettyCashRelease.hasMany(JournalEntry, {foreignKey:'belongsToId', as:'journalEntries'})
 
 JournalEntry.belongsTo(AccountTitle, {foreignKey:'accountTitleId', as:'account'})
@@ -72,3 +76,48 @@ PaymentRequestDetail.hasMany(PettyCashLiquidationDetail, {foreignKey:'paymentReq
 
 BookingDetails.belongsTo(Booking, { foreignKey: 'bookingId', as: 'booking' });
 Booking.hasMany(BookingDetails, { foreignKey: 'bookingId', as: 'bookingDetails' });
+
+
+// Booking JournalEntryBooking
+JournalEntryBooking.belongsTo(Booking, {
+  foreignKey: 'bookingId',
+  as: 'booking'
+});
+
+Booking.hasMany(JournalEntryBooking, {
+  foreignKey: 'bookingId',
+  as: 'journalEntryBookings'
+});
+
+// Account
+JournalEntryBooking.belongsTo(AccountTitle, {
+  foreignKey: 'accountTitleId',
+  as: 'account'
+});
+
+AccountTitle.hasMany(JournalEntryBooking, {
+  foreignKey: 'accountTitleId',
+  as: 'journalEntryBookings'
+});
+
+// SubAccount
+JournalEntryBooking.belongsTo(SubAccountTitle, {
+  foreignKey: 'subAccountTitleId',
+  as: 'subAccount'
+});
+
+SubAccountTitle.hasMany(JournalEntryBooking, {
+  foreignKey: 'subAccountTitleId',
+  as: 'journalEntryBookings'
+});
+
+// Department
+JournalEntryBooking.belongsTo(Department, {
+  foreignKey: 'departmentId',
+  as: 'department'
+});
+
+Department.hasMany(JournalEntryBooking, {
+  foreignKey: 'departmentId',
+  as: 'journalEntryBookings'
+});
