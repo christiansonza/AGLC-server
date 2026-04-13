@@ -18,7 +18,8 @@ import {
   fetchJournalBooking,
   fetchJournalBookingById,
   createJournalBooking,
-  putJournalBooking
+  putJournalBooking,
+  fetchJournalBookingAll
 } from '../controller/journalBookingController.js';
 
 import middleware from '../middleware/authMiddleware.js';
@@ -26,6 +27,8 @@ import middleware from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 // =========================
+router.get('/journals', middleware, fetchJournalBookingAll);
+
 // Booking 
 router.get('/', middleware, getBooking);
 router.get('/:id', middleware, getBookingById);
@@ -41,9 +44,11 @@ router.put('/:id/details/:detailId', middleware, updateBookingDetails);
 
 // =========================
 // Journal Booking 
-router.get('/:id/journal', middleware, fetchJournalBooking);
-router.get('/:id/journal/:journalId', middleware, fetchJournalBookingById);
-router.post('/:id/journal', middleware, createJournalBooking);
-router.put('/:id/journal/:journalId', middleware, putJournalBooking);
+// Fetch all journal entries for all bookings
+
+router.get('/:id/journals', middleware, fetchJournalBooking);
+router.get('/:id/journals/:journalId', middleware, fetchJournalBookingById);
+router.post('/:id/journals', middleware, createJournalBooking);
+router.put('/:id/journals/:journalId', middleware, putJournalBooking);
 
 export default router;

@@ -46,9 +46,9 @@ export const getJournalEntryById = async(req,res)=>{
 
 export const createJournalEntry = async(req,res)=>{
     try {
-        const {belongsToType, belongsToId, accountTitleId, subAccountTitleId, departmentId, listItemType, listItemId} = req.body
+        const {belongsToType, belongsToId, accountTitleId, subAccountTitleId, departmentId, listItemType, listItemId, credit, debit} = req.body
 
-        if(!belongsToType || !belongsToId || !accountTitleId || !subAccountTitleId || !departmentId || !listItemType || !listItemId ){
+        if(!belongsToType || !belongsToId || !accountTitleId || !subAccountTitleId || !departmentId || !listItemType || !listItemId || !credit || !debit ){
             return res.status(400).json({message:'All fields are required.'})
         }
 
@@ -59,7 +59,9 @@ export const createJournalEntry = async(req,res)=>{
             subAccountTitleId,
             departmentId,
             listItemType,
-            listItemId
+            listItemId,
+            credit,
+            debit
         })
         res.status(201).json({
             message:'Created successfully.',
@@ -74,7 +76,7 @@ export const createJournalEntry = async(req,res)=>{
 export const updateJournalEntry = async(req,res)=>{
     try {
         const {id} = req.params
-        const {belongsToType, belongsToId, accountTitleId, subAccountTitleId, departmentId, listItemType, listItemId} = req.body
+        const {belongsToType, belongsToId, accountTitleId, subAccountTitleId, departmentId, listItemType, listItemId, credit, debit} = req.body
 
         const result = await JournalEntry.findByPk(id)
         if(!result){
@@ -88,6 +90,8 @@ export const updateJournalEntry = async(req,res)=>{
         result.departmentId = departmentId ?? result.departmentId
         result.listItemType = listItemType ?? result.listItemType
         result.listItemId = listItemId ??result.listItemId
+        result.credit = credit ??result.credit
+        result.debit = debit ??result.debit
 
         await result.save()
 

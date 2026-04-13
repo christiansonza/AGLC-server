@@ -52,6 +52,12 @@ const JournalEntryBooking = sequelize.define('JournalEntryBooking',
 
     listItemId: {
         type: DataTypes.INTEGER
+    },
+    credit:{
+        type:DataTypes.DECIMAL
+    },
+    debit:{
+        type:DataTypes.DECIMAL
     }
 
 },

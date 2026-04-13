@@ -4,6 +4,15 @@ import SubAccount from '../model/subAccountTitleModel.js'
 import Department from '../model/departmentModel.js'
 import JournalEntryBooking from '../model/journalEntryBookingModel.js'
 
+export const fetchJournalBookingAll = async (req, res) => {
+  try {
+    const journals = await JournalEntryBooking.findAll(); 
+    res.status(200).json(journals);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export const fetchJournalBooking = async (req, res) => {
     try {
         const { id } = req.params 
@@ -62,7 +71,9 @@ export const createJournalBooking = async (req, res) => {
             subAccountTitleId,
             departmentId,
             listItemType,
-            listItemId
+            listItemId,
+            credit,
+            debit
         } = req.body
 
         if (!accountTitleId) {
@@ -75,7 +86,9 @@ export const createJournalBooking = async (req, res) => {
             subAccountTitleId,
             departmentId,
             listItemType,
-            listItemId
+            listItemId,
+            credit,
+            debit
         })
 
         res.status(201).json({
@@ -97,7 +110,9 @@ export const putJournalBooking = async (req, res) => {
             subAccountTitleId,
             departmentId,
             listItemType,
-            listItemId
+            listItemId,
+            credit,
+            debit
         } = req.body
 
         const result = await JournalEntryBooking.findOne({
@@ -116,7 +131,9 @@ export const putJournalBooking = async (req, res) => {
             subAccountTitleId: subAccountTitleId ?? result.subAccountTitleId,
             departmentId: departmentId ?? result.departmentId,
             listItemType: listItemType ?? result.listItemType,
-            listItemId: listItemId ?? result.listItemId
+            listItemId: listItemId ?? result.listItemId,
+            credit: credit ?? result.credit,
+            debit: debit ?? result.debit
         })
 
         res.status(200).json({

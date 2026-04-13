@@ -50,7 +50,14 @@ const JournalEntry = sequelize.define('JournalEntry',
         },
         listItemId:{
             type:DataTypes.INTEGER 
+        },
+        debit:{
+            type:DataTypes.DECIMAL
+        },
+        credit:{
+            type:DataTypes.DECIMAL
         }
+
     },
     {tableName:'JournalEntry'}
 )
