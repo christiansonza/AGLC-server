@@ -30,6 +30,8 @@ import broker from './router/brokerRouter.js'
 import vessel from './router/vesselRouter.js'
 import shipper from './router/shipperRouter.js'
 import destination from './router/destinationRouter.js'
+import branch from './router/branchRouter.js'
+import pettyCashFund from './router/pettyCashFund.js'
 
 //models
 import './model/userModel.js'
@@ -56,6 +58,8 @@ import './model/vesselModel.js'
 import './model/shipperModel.js'
 import './model/destinationModel.js'
 import './model/bookingDetailsModel.js'
+import './model/branchModel.js'
+import './model/pettyCashFundModel.js'
 
 
 const app = express()
@@ -96,7 +100,8 @@ app.use('/broker', broker)
 app.use('/vessel', vessel)
 app.use('/shipper', shipper)
 app.use('/destination', destination)
-
+app.use('/branch', branch)
+app.use('/pettyCashFund', pettyCashFund)
 
 //Connection
 const startServer = async()=>{

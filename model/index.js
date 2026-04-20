@@ -18,7 +18,6 @@ import PettyCashLiquidationDetail from './pettyCashLiquidationDetail.js'
 
 import BookingDetails from '../model/bookingDetailsModel.js'; 
 
-import JournalEntryBooking from './journalEntryBookingModel.js'
 
 
 //account, subaccount
@@ -77,47 +76,3 @@ PaymentRequestDetail.hasMany(PettyCashLiquidationDetail, {foreignKey:'paymentReq
 BookingDetails.belongsTo(Booking, { foreignKey: 'bookingId', as: 'booking' });
 Booking.hasMany(BookingDetails, { foreignKey: 'bookingId', as: 'bookingDetails' });
 
-
-// Booking JournalEntryBooking
-JournalEntryBooking.belongsTo(Booking, {
-  foreignKey: 'bookingId',
-  as: 'booking'
-});
-
-Booking.hasMany(JournalEntryBooking, {
-  foreignKey: 'bookingId',
-  as: 'journalEntryBookings'
-});
-
-// Account
-JournalEntryBooking.belongsTo(AccountTitle, {
-  foreignKey: 'accountTitleId',
-  as: 'account'
-});
-
-AccountTitle.hasMany(JournalEntryBooking, {
-  foreignKey: 'accountTitleId',
-  as: 'journalEntryBookings'
-});
-
-// SubAccount
-JournalEntryBooking.belongsTo(SubAccountTitle, {
-  foreignKey: 'subAccountTitleId',
-  as: 'subAccount'
-});
-
-SubAccountTitle.hasMany(JournalEntryBooking, {
-  foreignKey: 'subAccountTitleId',
-  as: 'journalEntryBookings'
-});
-
-// Department
-JournalEntryBooking.belongsTo(Department, {
-  foreignKey: 'departmentId',
-  as: 'department'
-});
-
-Department.hasMany(JournalEntryBooking, {
-  foreignKey: 'departmentId',
-  as: 'journalEntryBookings'
-});
