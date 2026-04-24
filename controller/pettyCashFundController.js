@@ -34,13 +34,13 @@ export const getPettyCashFundById = async (req, res) => {
 
 export const createPettyCashFund = async (req, res) => {
     try {
-        const { code, name, branch, department, fund } = req.body
+        const { code, name, branchId, departmentId, fund } = req.body
 
         if (
             code == null ||
             name == null ||
-            branch == null ||
-            department == null ||
+            branchId == null ||
+            departmentId == null ||
             fund == null
         ) {
             return res.status(400).json({ message: 'All fields are required' })
@@ -49,8 +49,8 @@ export const createPettyCashFund = async (req, res) => {
         const result = await PettyCashFund.create({
             code,
             name,
-            branch,
-            department,
+            branchId,
+            departmentId,
             fund
         })
 
@@ -70,7 +70,7 @@ export const createPettyCashFund = async (req, res) => {
 export const putPettyCashFund = async (req, res) => {
     try {
         const { id } = req.params
-        const { code, name, branch, department, fund } = req.body
+        const { code, name, branchId, departmentId, fund } = req.body
 
         const result = await PettyCashFund.findByPk(id)
 
@@ -81,8 +81,8 @@ export const putPettyCashFund = async (req, res) => {
         await result.update({
             code: code ?? result.code,
             name: name ?? result.name,
-            branch: branch ?? result.branch,
-            department: department ?? result.department,
+            branchId: branchId ?? result.branchId,
+            departmentId: departmentId ?? result.departmentId,
             fund: fund ?? result.fund
         })
 

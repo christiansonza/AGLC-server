@@ -18,7 +18,8 @@ import PettyCashLiquidationDetail from './pettyCashLiquidationDetail.js'
 
 import BookingDetails from '../model/bookingDetailsModel.js'; 
 
-
+import Branch from '../model/branchModel.js'
+import Fund from '../model/pettyCashFundModel.js'
 
 //account, subaccount
 SubAccountTitle.belongsTo(AccountTitle, { foreignKey: 'accountId', as: 'account' });
@@ -76,3 +77,10 @@ PaymentRequestDetail.hasMany(PettyCashLiquidationDetail, {foreignKey:'paymentReq
 BookingDetails.belongsTo(Booking, { foreignKey: 'bookingId', as: 'booking' });
 Booking.hasMany(BookingDetails, { foreignKey: 'bookingId', as: 'bookingDetails' });
 
+// Fund ↔ Department
+Fund.belongsTo(Department, { foreignKey: 'departmentId', as: 'department' });
+Department.hasMany(Fund, { foreignKey: 'departmentId', as: 'funds' });
+
+// Fund ↔ Branch
+Fund.belongsTo(Branch, { foreignKey: 'branchId', as: 'branch' });
+Branch.hasMany(Fund, { foreignKey: 'branchId', as: 'funds' });

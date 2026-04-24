@@ -5,12 +5,13 @@ import {
     createPettyCashFund,
     putPettyCashFund 
 } from '../controller/pettyCashFundController.js'
+import middleware from '../middleware/authMiddleware.js';
 
 const router = express.Router()
 
-router.get('/', getPettyCashFund)
-router.get('/:id', getPettyCashFundById)
-router.post('/', createPettyCashFund)
-router.put('/:id', putPettyCashFund)
+router.get('/', middleware, getPettyCashFund)
+router.get('/:id', middleware, getPettyCashFundById)
+router.post('/', middleware, createPettyCashFund)
+router.put('/:id', middleware, putPettyCashFund)
 
 export default router
