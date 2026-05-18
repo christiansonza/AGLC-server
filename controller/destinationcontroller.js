@@ -43,7 +43,7 @@ export const createDestination = async(req,res) =>{
         res.status(500).json({message:'Internal Server Error', error:error.message})
     }
 }
-
+ 
 export const updateDestination = async(req,res) =>{
     try {
         const {id} = req.params
